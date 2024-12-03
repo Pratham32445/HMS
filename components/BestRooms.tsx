@@ -13,8 +13,8 @@ const BestRooms = () => {
           </div>
           <div>
             <div className="my-10 flex gap-5">
-              {["/hotel1.jpg", "/hotel2.avif", "/hotel3.jpg"].map((src) => (
-                <Bestroomscard src={src} />
+              {["/hotel1.jpg", "/hotel2.avif", "/hotel3.jpg"].map((src,idx) => (
+                <Bestroomscard src={src} key={idx} />
               ))}
             </div>
           </div>

@@ -15,12 +15,12 @@ export const authoptions: AuthOptions = {
         email: { type: "email" },
         password: { type: "password" },
       },
-      // @ts-ignore
+      // @ts-expect-error
       async authorize(credentials) {},
     }),
   ],
   callbacks: {
-    // @ts-ignore
+      // @ts-expect-error
     async signIn({ user, account }) {
       const isUser = await client.guest.findFirst({
         where: { email: user.email! },
