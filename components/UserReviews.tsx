@@ -82,7 +82,7 @@ function UserReviews() {
   return (
     <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl">
       <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review) => (
+        {firstRow.map((review,id) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
