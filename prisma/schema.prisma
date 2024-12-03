@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Guest {
+  Id             String      @id @default(cuid())
+  firstName      String?     @map("first_name")
+  lastName       String?     @map("last_name")
+  email          String      @unique
+  password       String?
+  phoneNumber    String?
+  dateofBirth    DateTime?
+  nationality    String?
+  passportNumber String?
+  bookings       Bookings[]
+  accountRole    AccountRole @default(USER)
+}
+
+model Room {
+  Id           String     @id @default(cuid())
+  roomNumber   String     @unique @map("room_number")
+  roomType     RoomType   @default(SINGLE) @map("room_type")
+  maxOccupancy Int        @map("max_occupancy")
+  basePrice    Int
+  status       RoomStatus @default(AVAILABLE)
+  description  String?
+  bookings     Bookings[]
+  images      String[]
+}
+
+model Bookings {
+  Id             String        @id @default(cuid())
+  guestId        String
+  guest          Guest         @relation(fields: [guestId], references: [Id])
+  roomId         String
+  room           Room          @relation(fields: [roomId], references: [Id])
+  checkInDate    DateTime      @map("check_in_date")
+  checkOutDate   DateTime      @map("check_out_date")
+  totalPrice     Decimal
+  bookingStatus  BookingStatus @default(CONFIRMED) @map("booking_status")
+  numberofGuests Int           @map("number_of_guests")
+  paymentStatus  PaymentStatus @default(PENDING) @map("payment_status")
+  createdAt      DateTime      @default(now()) @map("created_at")
+}
+
+enum RoomType {
+  SINGLE
+  DOUBLE
+  FAMILY
+}
+
+enum RoomStatus {
+  AVAILABLE
+  OCCUPIED
+  MAINTAINANCE
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUND
+}
+
+enum AccountRole {
+  USER
+  ADMIN
+}
