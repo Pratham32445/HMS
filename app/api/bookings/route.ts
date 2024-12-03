@@ -18,4 +18,6 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
-export const DELETE = () => as
+export const DELETE = () => {
+  
+}
