@@ -15,12 +15,22 @@ export const authoptions: AuthOptions = {
         email: { type: "email" },
         password: { type: "password" },
       },
-      // @ts-expect-error
-      async authorize(credentials) {},
+      // @ts-expect-error: Necessary due to type mismatch between custom and library types
+      async authorize(credentials) {
+        const email = credentials?.email;
+        const password = credentials?.password;
+        if (!email || !password) return null;
+        const User = await client.guest.findFirst({ where: { email } });
+        if (User) {
+          const isPassword = User.password == password;
+          if (isPassword) return User;
+        }
+        return null;
+      },
     }),
   ],
   callbacks: {
-      // @ts-expect-error
+    // @ts-expect-error: Necessary due to type mismatch between custom and library types
     async signIn({ user, account }) {
       const isUser = await client.guest.findFirst({
         where: { email: user.email! },
@@ -28,6 +38,6 @@ export const authoptions: AuthOptions = {
       if (isUser) return { email: user.email, role: "admin" };
       const User = await client.guest.create({ data: { email: user.email! } });
       return User;
-    },
+    }
   },
 };

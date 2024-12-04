@@ -5,12 +5,18 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
   try {
     const { email, password } = await req.json();
+    console.log(email, password);
     const result = authSchema.safeParse({ email, password });
-    if (!result.success)
+    if (!result.success) {
+      const resultErrors = result.error.errors.reduce((acc, err) => {
+        acc[err.path[0]] = err.message; // Use the field name as the key
+        return acc;
+      }, {} as Record<string, string>);
       return NextResponse.json(
-        { Errors: result.error, type: "show Error" },
+        { Errors: resultErrors, type: "show-errors" },
         { status: 401 }
       );
+    }
     const isUser = await client.guest.findFirst({ where: { email } });
     if (isUser)
       return NextResponse.json(
@@ -27,4 +33,3 @@ export const POST = async (req: NextRequest) => {
     );
   }
 };
-

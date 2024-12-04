@@ -18,6 +18,7 @@ model Guest {
   firstName      String?     @map("first_name")
   lastName       String?     @map("last_name")
   email          String      @unique
+  isVerified     Boolean     @default(false)
   password       String?
   phoneNumber    String?
   dateofBirth    DateTime?
@@ -36,7 +37,7 @@ model Room {
   status       RoomStatus @default(AVAILABLE)
   description  String?
   bookings     Bookings[]
-  images      String[]
+  images       String[]
 }
 
 model Bookings {

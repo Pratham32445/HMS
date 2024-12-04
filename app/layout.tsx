@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Provider from "@/providers/Provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
@@ -27,10 +28,10 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <body
-          className={montserrat.className}
-        >
+        <body className={montserrat.className}>
+          {/* <Navbar /> */}
           <Provider>{children}</Provider>
+          <Toaster />
         </body>
       </ThemeProvider>
     </html>

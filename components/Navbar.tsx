@@ -1,22 +1,42 @@
 import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authoptions } from "@/app/api/auth/[...nextauth]/options";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await getServerSession(authoptions);
   return (
-    <div className="fixed top-0 w-full flex justify-between p-4 z-50">
-      <div>
-        <p className="text-xl">CheckInn</p>
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 
+      bg-black/10 
+      backdrop-blur-lg 
+      border border-black/20 
+      shadow-lg 
+      rounded-b-xl
+      transition-all duration-300
+    "
+    >
+      <div className="flex justify-between items-center p-5 max-w-7xl mx-auto">
+        <div>
+          <p className="text-xl font-bold">CheckInn</p>
+        </div>
+        <div className="flex items-center gap-4">
+          {!session ? (
+            <>
+              <Link href={"/login"}>
+                <Button variant="outline">Login</Button>
+              </Link>
+              <Link href={"/signup"}>
+                <Button>Create Account</Button>
+              </Link>
+            </>
+          ) : (
+            <Button>Account</Button>
+          )}
+        </div>
       </div>
-      <div className="flex gap-4">
-        <Link href={"/login"}>
-          <Button>Login</Button>
-        </Link>
-        <Link href={"/singup"}>
-          <Button>Create Account</Button>
-        </Link>
-      </div>
-    </div>
+    </nav>
   );
 };
 
