@@ -15,12 +15,14 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
 import { LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 function Signup() {
   const [authInfo, setAuthInfo] = useState({ email: "", password: "" });
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [Errors, setErrors] = useState({ email: "", password: "" });
+  const router = useRouter();
 
   const createAccount = async () => {
     try {
@@ -41,13 +43,17 @@ function Signup() {
         signIn("credentials", {
           email: authInfo.email,
           password: authInfo.password,
+          redirect : false
         });
         toast({
           title: "Account created successfully",
+          variant: "success",
         });
         setIsLoading(false);
+        router.push("/explore/rooms");
       }
     } catch (error: any) {
+      console.log(error);
       setIsLoading(false);
       const type = error.response.data.type;
       switch (type) {

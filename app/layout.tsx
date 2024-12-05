@@ -4,6 +4,7 @@ import Provider from "@/providers/Provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { Montserrat } from "next/font/google";
+import Navbar from "@/components/Navbar";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ export default function RootLayout({
         disableTransitionOnChange
       >
         <body className={montserrat.className}>
-          {/* <Navbar /> */}
+          <Navbar/>
           <Provider>{children}</Provider>
           <Toaster />
         </body>

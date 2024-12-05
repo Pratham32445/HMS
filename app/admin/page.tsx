@@ -1,6 +1,8 @@
+import NewUsers from "@/components/admin/NewUsers";
+import Stats from "@/components/admin/Stats";
 import React from "react";
 
-const Stats = () => {
+const Dashboard = () => {
   return (
     <>
       <div className="grid auto-rows-min gap-4 md:grid-cols-3">
@@ -18,11 +20,15 @@ const Stats = () => {
             <p className="text-sm">+20.1% from last month</p>
           </div>
         </div>
-        <div className="aspect-video rounded-xl bg-muted/50" />
+        <div className="aspect-video rounded-xl bg-muted/50">
+          <NewUsers />
+        </div>
       </div>
-      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+      <div className="h-[40vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+        <Stats />
+      </div>
     </>
   );
 };
 
-export default Stats;
+export default Dashboard;

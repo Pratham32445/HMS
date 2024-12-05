@@ -4,7 +4,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
@@ -14,7 +13,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-export default function Page({children} : {children : React.reactnode}) {
+export default function Page({children} : {children : React.ReactNode}) {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -26,13 +25,10 @@ export default function Page({children} : {children : React.reactnode}) {
             <BreadcrumbList>
               <BreadcrumbItem className="hidden md:block">
                 <BreadcrumbLink href="#">
-                  Building Your Application
+                  Admin Panel
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-              </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </header>

@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
-const Bestroomscard = ({src} : {src : string}) => {
+const Bestroomscard = ({ src }: { src: string }) => {
   return (
     <div>
       <Card className="relative">
@@ -31,7 +32,9 @@ const Bestroomscard = ({src} : {src : string}) => {
           />
         </CardContent>
         <CardFooter>
-          <Button className="w-full">Visit</Button>
+          <Link className="w-full" href={"explore/rooms/332323"}>
+            <Button className="w-full">Visit</Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>
