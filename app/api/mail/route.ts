@@ -3,7 +3,7 @@ import DropboxResetPasswordEmail from "@/emails";
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_KEY!);
+const resend = new Resend("re_dSKGiSFh_Nqr1CgFr1wekhTJK88vZUrDu");
 
 export const POST = async (req: NextRequest) => {
   const { email } = await req.json();
