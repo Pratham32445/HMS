@@ -24,7 +24,7 @@ const Room = () => {
       }
     };
     fetchRoom();
-  }, []);
+  }, [params]);
 
   return roomInfo ? (
     <div>
@@ -83,8 +83,7 @@ const Room = () => {
           </div>
         </div>
       </div>
-      {/* @ts-ignore */}
-      <Roomdialog open={dialog} price={roomInfo.basePrice} setOpen={setDialog} />
+      <Roomdialog open={dialog} price={roomInfo.basePrice} setOpen={()=>setDialog(false)} />
     </div>
   ) : (
     <div className="flex justify-center mt-[150px]">
