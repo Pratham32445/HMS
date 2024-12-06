@@ -52,7 +52,7 @@ function Signup() {
         setIsLoading(false);
         router.push("/explore/rooms");
       }
-    } catch (error: any) {
+    } catch (error : any) {
       console.log(error);
       setIsLoading(false);
       const type = error.response.data.type;

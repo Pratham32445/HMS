@@ -21,7 +21,7 @@ function Login() {
   const [authInfo, setAuthInfo] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const loginGuest = async (e) => {
+  const loginGuest = async (e : React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     const result = await signIn("credentials", {
