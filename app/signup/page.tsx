@@ -43,7 +43,7 @@ function Signup() {
         signIn("credentials", {
           email: authInfo.email,
           password: authInfo.password,
-          redirect : false
+          redirect: false,
         });
         toast({
           title: "Account created successfully",
@@ -52,15 +52,17 @@ function Signup() {
         setIsLoading(false);
         router.push("/explore/rooms");
       }
-    } catch (error : any) {
-      console.log(error);
+    } catch (error: unknown) {
       setIsLoading(false);
+      // @ts-expect-error
       const type = error.response.data.type;
       switch (type) {
         case "toast-error":
+          // @ts-expect-error
           toast({ title: error.response.data.message, variant: "destructive" });
           break;
         case "show-errors":
+          // @ts-expect-error
           setErrors(error.response.data.Errors);
         default:
           break;
