@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,41 +14,22 @@ import { Button } from "@/components/ui/button";
 import BlurFade from "@/components/ui/blur-fade";
 import Link from "next/link";
 import SparklesText from "@/components/ui/sparkles-text";
-
-const data = [
-  {
-    name: "Desc 102A",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut inventore explicabo, quam labore exercitationem necessitatibus voluptatum reprehenderit beatae modi tempore?",
-    image: "/room1.jpg",
-  },
-  {
-    name: "Desc 102A",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut inventore explicabo, quam labore exercitationem necessitatibus voluptatum reprehenderit beatae modi tempore?",
-    image: "/room2.jpg",
-  },
-  {
-    name: "Desc 102A",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut inventore explicabo, quam labore exercitationem necessitatibus voluptatum reprehenderit beatae modi tempore?",
-    image: "/room3.jpg",
-  },
-  {
-    name: "Desc 102A",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut inventore explicabo, quam labore exercitationem necessitatibus voluptatum reprehenderit beatae modi tempore?",
-    image: "/room4.jpg",
-  },
-  {
-    name: "Desc 102A",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut inventore explicabo, quam labore exercitationem necessitatibus voluptatum reprehenderit beatae modi tempore?",
-    image: "/room4.jpg",
-  },
-  {
-    name: "Desc 102A",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut inventore explicabo, quam labore exercitationem necessitatibus voluptatum reprehenderit beatae modi tempore?",
-    image: "/room4.jpg",
-  },
-];
+import axios from "axios";
+import { Room } from "@/types";
+import { LoaderCircle } from "lucide-react";
 
 const Rooms = () => {
+  const [rooms, setRooms] = useState([]);
+  const getRooms = async () => {
+    const res = await axios.get("/api/rooms");
+    setRooms(res.data.rooms);
+  };
+  useEffect(() => {
+    getRooms();
+  }, []);
+
+  console.log(rooms);
+
   return (
     <div>
       <div className="mt-[100px]">
@@ -57,26 +39,41 @@ const Rooms = () => {
           </p>
         </div>
         <div className="flex justify-center flex-wrap gap-10 my-10">
-          {data.map(({ name, desc, image }, idx) => (
-            <Card key={idx} className="w-3/12 p-0">
-              <CardHeader>
-                <CardTitle>{name}</CardTitle>
-                <CardDescription>{desc}</CardDescription>
-              </CardHeader>
-              <BlurFade key={idx} delay={0.25 + idx * 0.05} inView>
-                <CardContent className="relative w-full">
-                  <AspectRatio ratio={16 / 9}>
-                    <Image className="rounded" src={image} fill alt="hotel" />
-                  </AspectRatio>
-                </CardContent>
-              </BlurFade>
-              <CardFooter>
-                <Link className="w-full" href={`/explore/rooms/323`}>
-                  <Button className="w-full">Book Room</Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          ))}
+          {rooms.length > 0 ? (
+            rooms.map((room: Room, idx) => (
+              <Card key={room.Id} className="w-3/12 p-0">
+                <CardHeader>
+                  <CardTitle className="mb-2">{room.roomNumber}</CardTitle>
+                  <CardDescription className="flex flex-col gap-2">
+                    <p>${room.basePrice}</p>
+                    <p>{room.description}</p>
+                    <p>{room.roomType}</p>
+                  </CardDescription>
+                </CardHeader>
+                <BlurFade key={idx} delay={0.25 + idx * 0.05} inView>
+                  <CardContent className="relative w-full">
+                    <AspectRatio ratio={16 / 9}>
+                      <Image
+                        className="rounded"
+                        src={"/hotel1.jpg"}
+                        fill
+                        alt="hotel"
+                      />
+                    </AspectRatio>
+                  </CardContent>
+                </BlurFade>
+                <CardFooter>
+                  <Link className="w-full" href={`/explore/rooms/${room.Id}`}>
+                    <Button className="w-full">Book Room</Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))
+          ) : (
+            <div>
+              <LoaderCircle width={30} height={30} className="animate-spin"/>
+            </div>
+          )}
         </div>
       </div>
     </div>

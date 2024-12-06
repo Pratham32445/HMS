@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authoptions } from "@/app/api/auth/[...nextauth]/options";
+import Image from "next/image";
 
 const Navbar = async () => {
   const session = await getServerSession(authoptions);
@@ -18,8 +19,9 @@ const Navbar = async () => {
     "
       >
         <div className="flex justify-between items-center p-5 max-w-7xl mx-auto">
-          <div>
+          <div className="flex items-center">
             <p className="text-xl font-bold">CheckInn</p>
+            <Image src={"/logo.svg"} width={30} height={30} alt="logo"/>
           </div>
           <div className="flex items-center gap-4">
             {!session ? (

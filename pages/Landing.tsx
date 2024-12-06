@@ -2,7 +2,6 @@ import React from "react";
 import Promote from "@/components/promote";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Navbar from "@/components/Navbar";
 import ShimmerButton from "@/components/ui/shimmer-button";
 import LandingReviewMain from "@/components/LandingReviewMain";
 import { BorderBeam } from "@/components/ui/border-beam";

@@ -10,3 +10,14 @@ export const roomSchema = z.object({
   maxOccupancy : z.number(),
   basePrice : z.number()
 });
+
+export interface Room {
+  Id : string
+  basePrice : number;
+  roomType : string;
+  maxOccupancy : number;  
+  roomNumber : string;
+  status : string;
+  description : string;
+  images : string[]
+}

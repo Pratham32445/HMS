@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -29,13 +28,36 @@ const getDaysMonthAndNext = () => {
 const Roomdialog = ({
   open,
   setOpen,
+  price,
 }: {
   open: boolean;
   setOpen: () => void;
+  price: number;
 }) => {
   const { current, next } = getDaysMonthAndNext();
   const [days, setDays] = useState(current);
   const [currentMonth, setCurrentMonth] = useState(0);
+  const [selectedDays, setSelectedDays] = useState<Record<string, boolean>>({});
+
+  const addSeat = (day: number) => {
+    if (selectedDays[`${currentMonth}|${day}`]) {
+      setSelectedDays((prevState) => {
+        const newRooms = { ...prevState };
+        delete newRooms[`${currentMonth}|${day}`];
+        return newRooms;
+      });
+      return;
+    }
+    setSelectedDays((prevState) => ({
+      ...prevState,
+      [`${currentMonth}|${day}`]: true,
+    }));
+  };
+
+  const createBooking = async () => {
+     
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
@@ -48,8 +70,18 @@ const Roomdialog = ({
         <div className="grid gap-4 py-4">
           <div className="flex flex-wrap gap-3">
             {Array.from({ length: days }).map((day, idx) => (
-              <div key={idx} className="cursor-pointer">
-                <div className={`w-[20px] h-[20px] bg-neutral-500`}></div>
+              <div
+                key={idx}
+                className="cursor-pointer"
+                onClick={() => addSeat(idx + 1)}
+              >
+                <div
+                  className={`w-[20px] h-[20px] ${
+                    selectedDays[`${currentMonth}|${idx + 1}`]
+                      ? "bg-green-500"
+                      : "bg-neutral-500"
+                  }`}
+                ></div>
                 <p className="text-center text-xs my-2">{idx + 1}</p>
               </div>
             ))}
@@ -58,22 +90,32 @@ const Roomdialog = ({
             <Button
               disabled={currentMonth == 0}
               className="cursor-pointer"
-              onClick={() => setCurrentMonth(currentMonth - 1)}
+              onClick={() => [
+                setCurrentMonth(currentMonth - 1),
+                setDays(current),
+              ]}
             >
               <ChevronLeft />
             </Button>
             <Button
               disabled={currentMonth == 1}
               className="cursor-pointer"
-              onClick={() => setCurrentMonth(currentMonth + 1)}
+              onClick={() => [setCurrentMonth(currentMonth + 1), setDays(next)]}
             >
               <ChevronRight className="cursor-pointer" />
             </Button>
           </div>
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <div className="flex justify-between items-center">
+          <p>Booking Cost : ₹{Object.keys(selectedDays).length * price}</p>
+          <Button
+            disabled={Object.keys(selectedDays).length == 0}
+            type="submit"
+            onClick={createBooking}
+          >
+            Book
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
