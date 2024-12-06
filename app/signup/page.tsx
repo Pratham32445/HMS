@@ -134,6 +134,6 @@ function Signup() {
       <LoaderCircle className="animate-spin" width={50} height={50} />
     </div>
   );
-}
+} 
 
 export default Signup;
