@@ -10,12 +10,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
+import axios,{AxiosError} from "axios";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
 import { LoaderCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"
 
 function Signup() {
   const [authInfo, setAuthInfo] = useState({ email: "", password: "" });
@@ -54,18 +54,21 @@ function Signup() {
       }
     } catch (error: unknown) {
       setIsLoading(false);
-      // @ts-expect-error
-      const type = error.response.data.type;
-      switch (type) {
-        case "toast-error":
-          // @ts-expect-error
-          toast({ title: error.response.data.message, variant: "destructive" });
-          break;
-        case "show-errors":
-          // @ts-expect-error
-          setErrors(error.response.data.Errors);
-        default:
-          break;
+      if (error instanceof AxiosError && error.response) {
+        const type = error.response.data.type;
+        switch (type) {
+          case "toast-error":
+            toast({
+              title: error.response.data.message,
+              variant: "destructive",
+            });
+            break;
+          case "show-errors":
+            setErrors(error.response.data.Errors);
+            break;
+          default:
+            break;
+        }
       }
     }
   };
