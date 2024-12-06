@@ -17,8 +17,8 @@ async function isUserAdmin() {
 
 export const POST = async (req: NextRequest) => {
   try {
-    // if ((await isUserAdmin()) != "ADMIN")
-    //   return NextResponse.json({ messge: "forbidden" }, { status: 403 });
+    if ((await isUserAdmin()) != "ADMIN")
+      return NextResponse.json({ messge: "forbidden" }, { status: 403 });
     const body = await req.json();
     const result = roomSchema.safeParse(body);
     if (!result.success)

@@ -6,9 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 const resend = new Resend(process.env.RESEND_KEY!);
 
 export const POST = async (req: NextRequest) => {
-  const { email, userName } = await req.json();
+  const { email } = await req.json();
 
-  const { data, error } = await resend.emails.send({    
+  const { error } = await resend.emails.send({    
     from: "Acme <onboarding@resend.dev>",
     to: [email],
     subject: "hello world",

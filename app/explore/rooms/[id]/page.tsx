@@ -83,6 +83,7 @@ const Room = () => {
           </div>
         </div>
       </div>
+      {/* @ts-ignore */}
       <Roomdialog open={dialog} price={roomInfo.basePrice} setOpen={setDialog} />
     </div>
   ) : (

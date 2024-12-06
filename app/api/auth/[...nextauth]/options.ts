@@ -4,8 +4,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authoptions: AuthOptions = {
-  pages : {
-    "signIn" : "/login"
+  pages: {
+    signIn: "/login",
   },
   providers: [
     GoogleProvider({
@@ -26,7 +26,7 @@ export const authoptions: AuthOptions = {
         const User = await client.guest.findFirst({ where: { email } });
         if (User) {
           const isPassword = User.password == password;
-          console.log(isPassword)
+          console.log(isPassword);
           if (isPassword) return User;
         }
         return null;
@@ -44,7 +44,7 @@ export const authoptions: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // @ts-ignore
+      // @ts-expect-error: Necessary due to type mismatch between custom and library types
       session.user.isAdmin = token.isAdmin as boolean;
       return session;
     },
@@ -66,13 +66,13 @@ declare module "next-auth" {
       email: string | null;
       name: string | null;
       isAdmin: string | null;
-      image : string | null;
+      image: string | null;
     };
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
-    isAdmin?: boolean
+    isAdmin?: boolean;
   }
 }

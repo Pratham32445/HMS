@@ -9,7 +9,7 @@ import {
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 
-function getDaysInMonth(month, year) {
+function getDaysInMonth(month : number, year : number) {
   return new Date(year, month + 1, 0).getDate(); // Month is 0-indexed
 }
 
