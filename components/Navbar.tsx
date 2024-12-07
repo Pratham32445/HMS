@@ -20,7 +20,9 @@ const Navbar = async () => {
       >
         <div className="flex justify-between items-center p-5 max-w-7xl mx-auto">
           <div className="flex items-center">
+            <Link href={"/"}>
             <p className="text-xl font-bold">CheckInn</p>
+            </Link>
             <Image src={"/logo.svg"} width={30} height={30} alt="logo"/>
           </div>
           <div className="flex items-center gap-4">
