@@ -9,8 +9,13 @@ const isAuthenticated = (request: string) => {
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   if (!token) {
-    if (request.nextUrl.pathname == "/login" || request.nextUrl.pathname == "/signup" ) return NextResponse.next();
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (
+      request.nextUrl.pathname == "/login" ||
+      request.nextUrl.pathname == "/signup"
+    ) {
+      return NextResponse.next();
+    }
+    return NextResponse.redirect(new URL("/login", request.url));
   }
   if (isAuthenticated(request.nextUrl.pathname))
     return NextResponse.redirect(new URL("/", request.url));
